@@ -35,4 +35,8 @@ public interface ProductService {
 	public boolean sellNProduct(String prodId, int n);
 
 	public int getProductQuantity(String prodId);
+	
+	public String[] getMostSoldItemIds();
+	
+	public String[] getLeastSoldItemIds();
 }

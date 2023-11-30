@@ -54,16 +54,20 @@
 						<th>Price</th>
 						<th>Sold Qty</th>
 						<th>Stock Qty</th>
+						<th>Most/Least Sold</th>
 						<th colspan="2" style="text-align: center">Actions</th>
 					</tr>
 				</thead>
 				<tbody style="background-color: white; font-size: 16px;">
 
 
-
 					<%
 					ProductServiceImpl productDao = new ProductServiceImpl();
 					List<ProductBean> products = new ArrayList<ProductBean>();
+					
+					String[] mostSoldItemIds = productDao.getMostSoldItemIds();
+					String[] leastSoldItemIds = productDao.getLeastSoldItemIds();
+
 					products = productDao.getAllProducts();
 					for (ProductBean product : products) {
 					%>
@@ -82,6 +86,19 @@
 						<td><%=product.getProdPrice()%></td>
 						<td><%=new OrderServiceImpl().countSoldItem(product.getProdId())%></td>
 						<td><%=product.getProdQuantity()%></td>
+						<%
+						if (Arrays.asList(mostSoldItemIds).contains(product.getProdId())) 
+						{
+						%>
+						<td>Most Sold Item</td>
+						<% } 
+						else if (Arrays.asList(leastSoldItemIds).contains(product.getProdId())) 
+						{
+						%>
+						<td>Least Sold Item</td>
+						<%} else {%>
+						<td></td>
+						<%} %>
 						<td>
 							<form method="post">
 								<button type="submit"

@@ -533,5 +533,65 @@ public class ProductServiceImpl implements ProductService {
 
 		return quantity;
 	}
+	
+	public String[] getMostSoldItemIds() {
+        List<String> mostSoldItemIds = new ArrayList<>();
+	    OrderServiceImpl orderDao = new OrderServiceImpl();
+	    ProductServiceImpl productDao = new ProductServiceImpl();
+	    
+	    int highestCount = 0;
+	    int currentItemCount = 0;
+	    // Find highest count of any sold item
+		List<ProductBean> items = new ArrayList<ProductBean>();
+		items = productDao.getAllProducts();
+
+		for (ProductBean item : items) {
+			currentItemCount = orderDao.countSoldItem(item.getProdId());
+			if (highestCount < currentItemCount) {
+				highestCount = currentItemCount;
+			}
+		}
+		
+		for (ProductBean item: items) {
+			if (highestCount == orderDao.countSoldItem(item.getProdId())) {
+				mostSoldItemIds.add(item.getProdId());
+			}
+		}
+		
+	    return mostSoldItemIds.toArray(new String[0]);
+	}
+
+
+	public String[] getLeastSoldItemIds() {
+        List<String> leastSoldItemIds = new ArrayList<>();
+	    OrderServiceImpl orderDao = new OrderServiceImpl();
+	    ProductServiceImpl productDao = new ProductServiceImpl();
+	    
+	    // Set to an unusually high number
+	    int lowestCount = 100000000;
+	    int currentItemCount = 0;
+	    // Find highest count of any sold item
+		List<ProductBean> items = new ArrayList<ProductBean>();
+		items = productDao.getAllProducts();
+
+		for (ProductBean item : items) {
+			currentItemCount = orderDao.countSoldItem(item.getProdId());
+			if (lowestCount > currentItemCount) {
+				lowestCount = currentItemCount;
+			}
+		}
+		
+		for (ProductBean item: items) {
+			if (lowestCount == orderDao.countSoldItem(item.getProdId())) {
+				leastSoldItemIds.add(item.getProdId());
+			}
+		}
+		
+	    return leastSoldItemIds.toArray(new String[0]);
+	}
+
+
+
+
 
 }
