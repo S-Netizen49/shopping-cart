@@ -23,4 +23,12 @@ public interface OrderService {
 	public List<OrderDetails> getAllOrderDetails(String userEmailId);
 
 	public String shipNow(String orderId, String prodId);
+
+	public List<ProductBean> getMostSellingItems();
+	
+	public List<ProductBean> getMostSellingItems(String type);
+	
+	public List<ProductBean> getLeastSellingItems();
+	
+	public List<ProductBean> getLeastSellingItems(String type);
 }

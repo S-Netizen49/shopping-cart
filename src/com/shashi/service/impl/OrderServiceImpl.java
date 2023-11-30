@@ -297,5 +297,163 @@ public class OrderServiceImpl implements OrderService {
 
 		return status;
 	}
+	public List<ProductBean> getMostSellingItems() {
+		
+		List<ProductBean> productList = new ArrayList<ProductBean>();
+
+		Connection con = DBUtil.provideConnection();
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+
+			ps = con.prepareStatement(
+					"SELECT  p.* FROM product p LEFT JOIN orders o ON p.pid = o.prodid GROUP BY p.pid, p.pname, p.ptype, p.pinfo, p.pprice, p.pquantity, p.image, p.usedpquantity, p.usedpprice, p.discountpprice ORDER BY SUM(o.quantity) DESC LIMIT 3");
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+
+				ProductBean product = new ProductBean();
+				product.setProdId(rs.getString("pid"));
+				product.setProdName(rs.getString("pname"));
+				product.setProdType(rs.getString("ptype"));
+				product.setProdInfo(rs.getString("pinfo"));
+				product.setProdPrice(rs.getDouble("pprice"));
+				product.setProdQuantity(rs.getInt("pquantity"));
+				product.setProdImage(rs.getAsciiStream("image"));
+				productList.add(product);
+
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		DBUtil.closeConnection(con);
+		DBUtil.closeConnection(ps);
+
+		return productList;
+				
+	}
+	
+	public List<ProductBean> getMostSellingItems(String type){
+		
+		List<ProductBean> productList = new ArrayList<ProductBean>();
+
+		Connection con = DBUtil.provideConnection();
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+
+			ps = con.prepareStatement(
+					"SELECT  p.* FROM product p LEFT JOIN orders o ON p.pid = o.prodid WHERE p.ptype=? GROUP BY p.pid, p.pname, p.ptype, p.pinfo, p.pprice, p.pquantity, p.image, p.usedpquantity, p.usedpprice, p.discountpprice ORDER BY SUM(o.quantity) DESC LIMIT 3");
+			ps.setString(1, type);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+
+				ProductBean product = new ProductBean();
+				product.setProdId(rs.getString("pid"));
+				product.setProdName(rs.getString("pname"));
+				product.setProdType(rs.getString("ptype"));
+				product.setProdInfo(rs.getString("pinfo"));
+				product.setProdPrice(rs.getDouble("pprice"));
+				product.setProdQuantity(rs.getInt("pquantity"));
+				product.setProdImage(rs.getAsciiStream("image"));
+				productList.add(product);
+
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		DBUtil.closeConnection(con);
+		DBUtil.closeConnection(ps);
+
+		return productList;
+	}
+	
+	public List<ProductBean> getLeastSellingItems(){
+		
+		List<ProductBean> productList = new ArrayList<ProductBean>();
+
+		Connection con = DBUtil.provideConnection();
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+
+			ps = con.prepareStatement(
+					"SELECT  p.* FROM product p LEFT JOIN orders o ON p.pid = o.prodid GROUP BY p.pid, p.pname, p.ptype, p.pinfo, p.pprice, p.pquantity, p.image, p.usedpquantity, p.usedpprice, p.discountpprice ORDER BY SUM(o.quantity) LIMIT 3");
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+
+				ProductBean product = new ProductBean();
+				product.setProdId(rs.getString("pid"));
+				product.setProdName(rs.getString("pname"));
+				product.setProdType(rs.getString("ptype"));
+				product.setProdInfo(rs.getString("pinfo"));
+				product.setProdPrice(rs.getDouble("pprice"));
+				product.setProdQuantity(rs.getInt("pquantity"));
+				product.setProdImage(rs.getAsciiStream("image"));
+				productList.add(product);
+
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		DBUtil.closeConnection(con);
+		DBUtil.closeConnection(ps);
+
+		return productList;
+	}
+	
+	public List<ProductBean> getLeastSellingItems(String type){
+		
+		List<ProductBean> productList = new ArrayList<ProductBean>();
+
+		Connection con = DBUtil.provideConnection();
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+
+			ps = con.prepareStatement(
+					"SELECT  p.* FROM product p LEFT JOIN orders o ON p.pid = o.prodid WHERE p.ptype=? GROUP BY p.pid, p.pname, p.ptype, p.pinfo, p.pprice, p.pquantity, p.image, p.usedpquantity, p.usedpprice, p.discountpprice ORDER BY SUM(o.quantity) LIMIT 3");
+			ps.setString(1, type);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+
+				ProductBean product = new ProductBean();
+				product.setProdId(rs.getString("pid"));
+				product.setProdName(rs.getString("pname"));
+				product.setProdType(rs.getString("ptype"));
+				product.setProdInfo(rs.getString("pinfo"));
+				product.setProdPrice(rs.getDouble("pprice"));
+				product.setProdQuantity(rs.getInt("pquantity"));
+				product.setProdImage(rs.getAsciiStream("image"));
+				productList.add(product);
+
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		DBUtil.closeConnection(con);
+		DBUtil.closeConnection(ps);
+
+		return productList; 
+	}
 
 }
