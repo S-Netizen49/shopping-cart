@@ -14,6 +14,7 @@ import com.shashi.service.ProductService;
 import com.shashi.utility.DBUtil;
 import com.shashi.utility.IDUtil;
 import com.shashi.utility.MailMessage;
+import com.shashi.srv.*;
 
 public class ProductServiceImpl implements ProductService {
 
@@ -32,6 +33,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public String addProduct(ProductBean product) {
+		
 		String status = "Product Registration Failed!";
 
 		if (product.getProdId() == null)
@@ -56,12 +58,18 @@ public class ProductServiceImpl implements ProductService {
 			if (k > 0) {
 
 				status = "Product Added Successfully with Product Id: " + product.getProdId();
+				
+				
 
 			} else {
 
 				status = "Product Updation Failed!";
 			}
-
+			
+			 if (status.contains("Product Added Successfully")) {
+			 }
+			 	
+		        
 		} catch (SQLException e) {
 			status = "Error: " + e.getMessage();
 			e.printStackTrace();
@@ -226,6 +234,88 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<ProductBean> getAllProductsByType(String type) {
+		List<ProductBean> products = new ArrayList<ProductBean>();
+
+		Connection con = DBUtil.provideConnection();
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			ps = con.prepareStatement("SELECT * FROM `shopping-cart`.product where lower(ptype) like ?;");
+			ps.setString(1, "%" + type + "%");
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+
+				ProductBean product = new ProductBean();
+
+				product.setProdId(rs.getString(1));
+				product.setProdName(rs.getString(2));
+				product.setProdType(rs.getString(3));
+				product.setProdInfo(rs.getString(4));
+				product.setProdPrice(rs.getDouble(5));
+				product.setProdQuantity(rs.getInt(6));
+				product.setProdImage(rs.getAsciiStream(7));
+
+				products.add(product);
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		DBUtil.closeConnection(con);
+		DBUtil.closeConnection(ps);
+		DBUtil.closeConnection(rs);
+
+		return products;
+	}
+	
+	
+	public List<ProductBean> getAllDiscountedProductsByType(String type) {
+		List<ProductBean> products = new ArrayList<ProductBean>();
+
+		Connection con = DBUtil.provideConnection();
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			ps = con.prepareStatement("SELECT * FROM `shopping-cart`.product where lower(ptype) like ?;");
+			ps.setString(1, "%" + type + "%");
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+
+				ProductBean product = new ProductBean();
+
+				product.setProdId(rs.getString(1));
+				product.setProdName(rs.getString(2));
+				product.setProdType(rs.getString(3));
+				product.setProdInfo(rs.getString(4));
+				product.setProdPrice(rs.getDouble(5));
+				product.setProdQuantity(rs.getInt(6));
+				product.setProdImage(rs.getAsciiStream(7));
+
+				products.add(product);
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		DBUtil.closeConnection(con);
+		DBUtil.closeConnection(ps);
+		DBUtil.closeConnection(rs);
+
+		return products;
+	}
+	
+	
+	public List<ProductBean> getAllUsedProductsByType(String type) {
 		List<ProductBean> products = new ArrayList<ProductBean>();
 
 		Connection con = DBUtil.provideConnection();

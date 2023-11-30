@@ -87,7 +87,14 @@
 						%>
 						<button type="submit"
 							formaction="./AddtoCart?uid=<%=userName%>&pid=<%=product.getProdId()%>&pqty=1"
-							class="btn btn-success">Add to Cart</button>
+							class="btn btn-success" onclick="recommendUsed()">Add to Cart</button>
+							
+						<script>
+							function recommendUsed(){
+								alert('We see that you are interested in this type of product. We have similar used products available under the "Category" tab and "Used Products". Feel free to take a look!');
+							}
+						</script>
+						
 						&nbsp;&nbsp;&nbsp;
 						<button type="submit"
 							formaction="./AddtoCart?uid=<%=userName%>&pid=<%=product.getProdId()%>&pqty=1"

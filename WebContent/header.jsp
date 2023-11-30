@@ -109,6 +109,8 @@
 							<li><a href="userHome.jsp?type=camera">Camera</a></li>
 							<li><a href="userHome.jsp?type=speaker">Speakers</a></li>
 							<li><a href="userHome.jsp?type=tablet">Tablets</a></li>
+							<li><a href="userUsed.jsp">Used Products</a><li>
+							<li><a href="userDiscounted.jsp">Discounted Products</a><li>
 						</ul></li>
 					<%
 					if (notf == 0) {

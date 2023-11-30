@@ -10,6 +10,7 @@ import java.util.List;
 import com.shashi.beans.DemandBean;
 import com.shashi.service.DemandService;
 import com.shashi.utility.DBUtil;
+
 //This class is to process the demand items which are
 //not available at the time of purchase by any customer
 //the customer will receive mail once the product is avaible
@@ -154,5 +155,7 @@ public class DemandServiceImpl implements DemandService {
 
 		return demandList;
 	}
+	
+	
 
 }

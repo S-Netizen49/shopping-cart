@@ -79,7 +79,7 @@ public class AddtoCart extends HttpServlet {
 
 				cart.updateProductToCart(userId, prodId, availableQty);
 
-				status = "Only " + availableQty + " no of " + product.getProdName()
+				status = "funny " + "Only " + availableQty + " no of " + product.getProdName()
 						+ " are available in the shop! So we are adding only " + availableQty
 						+ " products into Your Cart" + "";
 			}
