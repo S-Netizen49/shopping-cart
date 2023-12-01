@@ -309,7 +309,7 @@ public class OrderServiceImpl implements OrderService {
 		try {
 
 			ps = con.prepareStatement(
-					"SELECT  p.* FROM product p LEFT JOIN orders o ON p.pid = o.prodid GROUP BY p.pid, p.pname, p.ptype, p.pinfo, p.pprice, p.pquantity, p.image, p.usedpquantity, p.usedpprice, p.discountpprice ORDER BY SUM(o.quantity) DESC LIMIT 3");
+					"SELECT  p.* FROM product p LEFT JOIN orders o ON p.pid = o.prodid GROUP BY p.pid, p.pname, p.ptype, p.pinfo, p.pprice, p.pquantity, p.image ORDER BY SUM(o.quantity) DESC LIMIT 3");
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -389,7 +389,7 @@ public class OrderServiceImpl implements OrderService {
 		try {
 
 			ps = con.prepareStatement(
-					"SELECT  p.* FROM product p LEFT JOIN orders o ON p.pid = o.prodid GROUP BY p.pid, p.pname, p.ptype, p.pinfo, p.pprice, p.pquantity, p.image, p.usedpquantity, p.usedpprice, p.discountpprice ORDER BY SUM(o.quantity) LIMIT 3");
+					"SELECT  p.* FROM product p LEFT JOIN orders o ON p.pid = o.prodid GROUP BY p.pid, p.pname, p.ptype, p.pinfo, p.pprice, p.pquantity, p.image ORDER BY SUM(o.quantity) LIMIT 3");
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
