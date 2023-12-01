@@ -12,12 +12,15 @@ import com.shashi.beans.DemandBean;
 import com.shashi.beans.ProductBean;
 import com.shashi.service.CartService;
 import com.shashi.utility.DBUtil;
+import com.shashi.service.impl.ProductServiceImpl;
+
 
 public class CartServiceImpl implements CartService {
 
 	@Override
 	public String addProductToCart(String userId, String prodId, int prodQty) {
 		String status = "Failed to Add into Cart";
+		
 
 		Connection con = DBUtil.provideConnection();
 
@@ -67,6 +70,7 @@ public class CartServiceImpl implements CartService {
 
 				}
 			}
+		
 
 		} catch (SQLException e) {
 			status = "Error: " + e.getMessage();
@@ -318,7 +322,10 @@ public class CartServiceImpl implements CartService {
 				if (k > 0)
 					status = "Product Successfully Updated to Cart!";
 
-			}
+			
+		        }
+			
+			
 
 		} catch (SQLException e) {
 			status = "Error: " + e.getMessage();
@@ -332,7 +339,8 @@ public class CartServiceImpl implements CartService {
 
 		return status;
 	}
-
+	
+	
 	public int getProductCount(String userId, String prodId) {
 		int count = 0;
 

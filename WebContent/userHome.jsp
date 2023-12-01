@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ page
 	import="com.shashi.service.impl.*, com.shashi.service.*,com.shashi.beans.*,java.util.*,javax.servlet.ServletOutputStream,java.io.*"%>
+<%@ page import="java.util.Map"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,7 +61,123 @@
 	<!-- Start of Product Items List -->
 	<div class="container">
 		<div class="row text-center">
+			<div class="container1">
+	    <h3>Most and Least Selling Products</h3>
+	    <h3>Most Selling Products</h3>
+	    <!-- The row displaying most selling products -->
+	 
+	                    <% 
+	                    OrderServiceImpl orderService = new OrderServiceImpl();
+	                    List<ProductBean> mostSelling = orderService.getMostSellingItems();
+	        			for (ProductBean product : mostSelling) {
+	        				int cartQty = new CartServiceImpl().getCartItemCount(userName, product.getProdId());
+	        			%>
+	        			<div class="col-sm-4" style='height: 350px;'>
+	        				<div class="thumbnail">
+	        					<img src="./ShowImage?pid=<%=product.getProdId()%>" alt="Product"
+	        						style="height: 150px; max-width: 180px">
+	        					<p class="productname"><%=product.getProdName()%>
+	        					</p>
+	        					<%
+	        					String description = product.getProdInfo();
+	        					description = description.substring(0, Math.min(description.length(), 100));
+	        					%>
+	        					<p class="productinfo"><%=description%>..
+	        					</p>
+	        					<p class="price">
+	        						Rs
+	        						<%=product.getProdPrice()%>
+	        					</p>
+	        					<form method="post">
+	        						<%
+	        						if (cartQty == 0) {
+	        						%>
+	        						<button type="submit"
+	        							formaction="./AddtoCart?uid=<%=userName%>&pid=<%=product.getProdId()%>&pqty=1"
+	        							class="btn btn-success">Add to Cart</button>
+	        						&nbsp;&nbsp;&nbsp;
+	        						<button type="submit"
+	        							formaction="./AddtoCart?uid=<%=userName%>&pid=<%=product.getProdId()%>&pqty=1"
+	        							class="btn btn-primary">Buy Now</button>
+	        						<%
+	        						} else {
+	        						%>
+	        						<button type="submit"
+	        							formaction="./AddtoCart?uid=<%=userName%>&pid=<%=product.getProdId()%>&pqty=0"
+	        							class="btn btn-danger">Remove From Cart</button>
+	        						&nbsp;&nbsp;&nbsp;
+	        						<button type="submit" formaction="cartDetails.jsp"
+	        							class="btn btn-success">Checkout</button>
+	        						<%
+	        						}
+	        						%>
+	        					</form>
+	        					<br />
+	        				</div>
+	        			</div>
 
+	        			<%
+	        			}
+	        			%>
+	                </div>
+	                <!-- The row displaying least selling products -->
+	               <h3>Least Selling Products</h3>
+	                <div class="row">
+	                    <% 
+	                    List<ProductBean> leastSelling = orderService.getLeastSellingItems();
+	                    
+	                    for (ProductBean product : leastSelling) {
+	        				int cartQty = new CartServiceImpl().getCartItemCount(userName, product.getProdId());
+	        			%>
+	        			<div class="col-sm-4" style='height: 350px;'>
+	        				<div class="thumbnail">
+	        					<img src="./ShowImage?pid=<%=product.getProdId()%>" alt="Product"
+	        						style="height: 150px; max-width: 180px">
+	        					<p class="productname"><%=product.getProdName()%>
+	        					</p>
+	        					<%
+	        					String description = product.getProdInfo();
+	        					description = description.substring(0, Math.min(description.length(), 100));
+	        					%>
+	        					<p class="productinfo"><%=description%>..
+	        					</p>
+	        					<p class="price">
+	        						Rs
+	        						<%=product.getProdPrice()%>
+	        					</p>
+	        					<form method="post">
+	        						<%
+	        						if (cartQty == 0) {
+	        						%>
+	        						<button type="submit"
+	        							formaction="./AddtoCart?uid=<%=userName%>&pid=<%=product.getProdId()%>&pqty=1"
+	        							class="btn btn-success">Add to Cart</button>
+	        						&nbsp;&nbsp;&nbsp;
+	        						<button type="submit"
+	        							formaction="./AddtoCart?uid=<%=userName%>&pid=<%=product.getProdId()%>&pqty=1"
+	        							class="btn btn-primary">Buy Now</button>
+	        						<%
+	        						} else {
+	        						%>
+	        						<button type="submit"
+	        							formaction="./AddtoCart?uid=<%=userName%>&pid=<%=product.getProdId()%>&pqty=0"
+	        							class="btn btn-danger">Remove From Cart</button>
+	        						&nbsp;&nbsp;&nbsp;
+	        						<button type="submit" formaction="cartDetails.jsp"
+	        							class="btn btn-success">Checkout</button>
+	        						<%
+	        						}
+	        						%>
+	        					</form>
+	        					<br />
+	        				</div>
+	        			</div>
+
+	        			<%
+	        			}
+	        			%>
+	                </div>
+			<h3>All products available</h3>
 			<%
 			for (ProductBean product : products) {
 				int cartQty = new CartServiceImpl().getCartItemCount(userName, product.getProdId());
@@ -87,7 +204,14 @@
 						%>
 						<button type="submit"
 							formaction="./AddtoCart?uid=<%=userName%>&pid=<%=product.getProdId()%>&pqty=1"
-							class="btn btn-success">Add to Cart</button>
+							class="btn btn-success" onclick="recommendUsed()">Add to Cart</button>
+							
+						<script>
+							function recommendUsed(){
+								alert('We see that you are interested in this type of product. We have similar used products available under the "Category" tab and "Used Products". Feel free to take a look!');
+							}
+						</script>
+						
 						&nbsp;&nbsp;&nbsp;
 						<button type="submit"
 							formaction="./AddtoCart?uid=<%=userName%>&pid=<%=product.getProdId()%>&pqty=1"

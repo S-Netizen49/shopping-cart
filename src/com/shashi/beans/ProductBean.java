@@ -84,5 +84,6 @@ public class ProductBean implements Serializable {
 	public void setProdImage(InputStream prodImage) {
 		this.prodImage = prodImage;
 	}
+	
 
 }

@@ -36,7 +36,12 @@ public interface ProductService {
 
 	public int getProductQuantity(String prodId);
 	
+<<<<<<< HEAD
 	public String[] getMostSoldItemIds();
 	
 	public String[] getLeastSoldItemIds();
+=======
+	
+
+>>>>>>> 447c30b1971d71e695392a9965e2305a418a758c
 }
