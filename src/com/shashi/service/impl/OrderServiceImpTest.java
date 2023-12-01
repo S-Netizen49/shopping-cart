@@ -1,9 +1,6 @@
 package com.shashi.service.impl;
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.List;
-
-
 import com.shashi.beans.ProductBean;
 import org.junit.jupiter.api.Test;
 class OrderServiceImplTest
@@ -22,6 +19,4 @@ class OrderServiceImplTest
         List<ProductBean> l = osi.getMostSellingItems();
         assertTrue(l.size() > 0);
 	}
-
-
 }
